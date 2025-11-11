@@ -7,7 +7,7 @@ from code.database import Database
 
 
 class AuthWindow(QWidget):
-    login_success = pyqtSignal(int, str) # открытие главного экрана id, isername
+    login_success = pyqtSignal(int, str) # открытие главного экрана id, username
 
     def __init__(self):
         super().__init__()
@@ -23,14 +23,14 @@ class AuthWindow(QWidget):
         title.setFont(QFont("Arial", 16))
         title.setStyleSheet("color: black;")
 
-        self.username_input = QLineEdit()
-        self.username_input.setPlaceholderText("Имя пользователя")
-        self.username_input.setStyleSheet("background-color: white; color: black;")
+        self.username = QLineEdit()
+        self.username.setPlaceholderText("Имя пользователя")
+        self.username.setStyleSheet("background-color: white; color: black;")
 
-        self.password_input = QLineEdit()
-        self.password_input.setPlaceholderText("Пароль")
-        self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
-        self.password_input.setStyleSheet("background-color: white; color: black;")
+        self.password = QLineEdit()
+        self.password.setPlaceholderText("Пароль")
+        self.password.setEchoMode(QLineEdit.EchoMode.Password)
+        self.password.setStyleSheet("background-color: white; color: black;")
 
         login_button = QPushButton("Войти")
         login_button.setStyleSheet("background-color: white; color: black;")
@@ -42,8 +42,8 @@ class AuthWindow(QWidget):
 
         layout = QVBoxLayout()
         layout.addWidget(title)
-        layout.addWidget(self.username_input)
-        layout.addWidget(self.password_input)
+        layout.addWidget(self.username)
+        layout.addWidget(self.password)
 
         buttons = QHBoxLayout()
         buttons.addWidget(login_button)
@@ -53,8 +53,8 @@ class AuthWindow(QWidget):
         self.setLayout(layout)
 
     def login(self):
-        username = self.username_input.text().strip()
-        password = self.password_input.text().strip()
+        username = self.username.text()
+        password = self.password.text()
 
         if not username or not password:
             self.show_message("Ошибка", "Заполните все поля!")
@@ -63,17 +63,17 @@ class AuthWindow(QWidget):
         success, user_id = self.db.login_user(username, password)
         
         if success:
-            print(f"✅ Успешный вход: {username} (id: {user_id})")
+            print(f"Успешный вход {username} с id: {user_id}")
             self.login_success.emit(user_id, username)
         else:
-            self.show_message("Ошибка", "Неверное имя пользователя или пароль.")
+            self.show_message("Ошибка", "Неверное имя пользователя или пароль")
 
     def register(self):
-        username = self.username_input.text().strip()
-        password = self.password_input.text().strip()
+        username = self.username.text()
+        password = self.password.text()
 
         if not username or not password:
-            self.show_message("Ошибка", "Заполните все поля!")
+            self.show_message("Ошибка", "Заполните все поля")
             return
 
         success, result = self.db.register_user(username, password)
@@ -82,8 +82,8 @@ class AuthWindow(QWidget):
             login_success, user_id = self.db.login_user(username, password)
             if login_success:
                 self.db.get_default_categories(user_id)
-            self.show_message("Успех", "Регистрация прошла успешно! Теперь можно войти.")
-            self.password_input.clear()
+            self.show_message("Успех", "Регистрация прошла успешно! Теперь можно войти")
+            self.password.clear()
         else:
             self.show_message("Ошибка", result)
 
