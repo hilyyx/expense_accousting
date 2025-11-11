@@ -4,9 +4,10 @@ from PyQt6.QtWidgets import (
     QMessageBox, QVBoxLayout, QHBoxLayout, QGridLayout, QHeaderView
 )
 from PyQt6.QtCore import Qt, QDate
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QPixmap
 from code.database import Database
 from code.statistics_window import StatisticsWindow
+import os
 
 
 class MainWindow(QMainWindow):
@@ -36,11 +37,23 @@ class MainWindow(QMainWindow):
         
         widget_style = "background-color: white; color: black;"
         button_style = "background-color: white; color: black; padding: 5px;"
+
+        title_layout = QHBoxLayout()
+        title_label = QLabel(f"Учёт расходов — {self.username}")
+        title_label.setFont(QFont("Arial", 14))
+        title_label.setStyleSheet("color: black; padding: 5px;")
+        title_layout.addWidget(title_label)
+
+        image_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "res", "money_icon.png")
+        icon_label = QLabel()
+        pixmap = QPixmap(image_path)
+        icon_label.setPixmap(pixmap.scaled(40, 40, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
+        title_layout.addWidget(icon_label)
         
-        title = QLabel(f"Учёт расходов — {self.username}")
-        title.setFont(QFont("Arial", 14))
-        title.setStyleSheet("color: black; padding: 5px;")
-        main_layout.addWidget(title)
+        title_layout.addStretch()
+        title_widget = QWidget()
+        title_widget.setLayout(title_layout)
+        main_layout.addWidget(title_widget)
         
         form_group = QWidget()
         form_group.setStyleSheet("background-color: white; padding: 10px;")

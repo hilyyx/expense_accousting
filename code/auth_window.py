@@ -1,9 +1,10 @@
 from PyQt6.QtWidgets import (
     QWidget, QLabel, QLineEdit, QPushButton, QMessageBox, QVBoxLayout, QHBoxLayout
 )
-from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtGui import QFont
+from PyQt6.QtCore import pyqtSignal, Qt
+from PyQt6.QtGui import QFont, QPixmap
 from code.database import Database
+import os
 
 
 class AuthWindow(QWidget):
@@ -19,9 +20,24 @@ class AuthWindow(QWidget):
         self.init_ui()
 
     def init_ui(self):
+        layout = QVBoxLayout()
+
+        title_layout = QHBoxLayout()
+        image_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "res", "wallet_icon.png")
+        icon_label = QLabel()
+        pixmap = QPixmap(image_path)
+        icon_label.setPixmap(pixmap.scaled(50, 50, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
+        title_layout.addWidget(icon_label)
+        
         title = QLabel("Добро пожаловать!")
         title.setFont(QFont("Arial", 16))
         title.setStyleSheet("color: black;")
+        title_layout.addWidget(title)
+        title_layout.addStretch()
+        
+        title_widget = QWidget()
+        title_widget.setLayout(title_layout)
+        layout.addWidget(title_widget)
 
         self.username = QLineEdit()
         self.username.setPlaceholderText("Имя пользователя")
@@ -40,8 +56,6 @@ class AuthWindow(QWidget):
         login_button.clicked.connect(self.login)
         register_button.clicked.connect(self.register)
 
-        layout = QVBoxLayout()
-        layout.addWidget(title)
         layout.addWidget(self.username)
         layout.addWidget(self.password)
 
