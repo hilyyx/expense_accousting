@@ -1,0 +1,32 @@
+========================================
+КОМАНДА ДЛЯ ПЕРЕСБОРКИ С РЕСУРСАМИ
+========================================
+
+Выполните эту команду для пересборки с включением всех ресурсов:
+
+pyinstaller main.spec --clean
+
+ИЛИ создайте новый .exe с нуля:
+
+pyinstaller --onefile --windowed --name "Учет_расходов" --add-data "res;res" --add-data "database;database" --hidden-import PyQt6 --hidden-import PyQt6.QtCore --hidden-import PyQt6.QtGui --hidden-import PyQt6.QtWidgets --hidden-import PyQt6.sip --hidden-import sqlite3 --hidden-import code --hidden-import code.auth_window --hidden-import code.main_window --hidden-import code.database --hidden-import code.statistics_window --hidden-import code.resource_path --collect-all PyQt6 --noconfirm --clean main.py
+
+========================================
+ЧТО БЫЛО ИСПРАВЛЕНО:
+========================================
+
+1. Создан модуль code/resource_path.py для правильной работы путей в .exe
+2. Обновлен main.spec - добавлены папки res и database в datas
+3. Обновлен код для использования resource_path() вместо прямых путей
+4. База данных теперь создается рядом с .exe файлом
+
+========================================
+ВАЖНО:
+========================================
+
+- Папка database будет включена в сборку (для структуры)
+- База данных database.db будет создаваться автоматически при первом запуске
+- Все изображения из папки res будут доступны в .exe
+- Отчеты будут сохраняться рядом с .exe файлом
+
+========================================
+

@@ -7,6 +7,7 @@ from PyQt6.QtCore import Qt, QDate
 from PyQt6.QtGui import QFont, QPixmap
 from code.database import Database
 from code.statistics_window import StatisticsWindow
+from code.resource_path import resource_path
 import os
 
 
@@ -44,7 +45,7 @@ class MainWindow(QMainWindow):
         title_label.setStyleSheet("color: black; padding: 5px;")
         title_layout.addWidget(title_label)
 
-        image_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "res", "money_icon.png")
+        image_path = resource_path("res/money_icon.png")
         icon_label = QLabel()
         pixmap = QPixmap(image_path)
         icon_label.setPixmap(pixmap.scaled(40, 40, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))

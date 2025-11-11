@@ -1,6 +1,8 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QTableWidget, QTableWidgetItem, QMessageBox, QHeaderView
 from PyQt6.QtCore import Qt
 from datetime import datetime
+from code.resource_path import get_base_dir
+import os
 
 
 class StatisticsWindow(QWidget):
@@ -102,7 +104,8 @@ class StatisticsWindow(QWidget):
 
         report_text.append("=" * 50)
 
-        with open("report.txt", "w", encoding="utf-8") as file:
+        report_path = os.path.join(get_base_dir(), "report.txt")
+        with open(report_path, "w", encoding="utf-8") as file:
             file.write("\n".join(report_text))
 
         self.show_message("Успех", f"Отчёт сохранён в файл report.txt\n\nВсего транзакций: {len(trans_list)}")

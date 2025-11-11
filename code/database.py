@@ -1,12 +1,11 @@
 import sqlite3
 import os
+from code.resource_path import get_database_path
 
 
 class Database:
     def __init__(self):
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        db_path = os.path.normpath(os.path.join(base_dir, "..", "database", "database.db"))
-        os.makedirs(os.path.dirname(db_path), exist_ok=True)
+        db_path = get_database_path()
         self.conn = sqlite3.connect(db_path)
     
     def register_user(self, username, password):

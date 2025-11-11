@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import pyqtSignal, Qt
 from PyQt6.QtGui import QFont, QPixmap
 from code.database import Database
+from code.resource_path import resource_path
 import os
 
 
@@ -23,7 +24,7 @@ class AuthWindow(QWidget):
         layout = QVBoxLayout()
 
         title_layout = QHBoxLayout()
-        image_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "res", "wallet_icon.png")
+        image_path = resource_path("res/wallet_icon.png")
         icon_label = QLabel()
         pixmap = QPixmap(image_path)
         icon_label.setPixmap(pixmap.scaled(50, 50, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
