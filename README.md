@@ -84,6 +84,8 @@
   `id`, `username`, `password`  
 - Таблица **`transactions`**:  
   `id`, `user_id`, `category_id`, `type` *(доход 0 /расход 1)*, `amount`, `date`, `description`
+- Таблица **`categories`**:  
+  `id`, `name`, `type`, `user_id`
 
 ### Связь:
 - Один пользователь может иметь множество транзакций  
