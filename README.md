@@ -85,7 +85,7 @@
 - Таблица **`users`**:  
   `id`, `username`, `password`  
 - Таблица **`transactions`**:  
-  `id`, `user_id`, `category_id`, `type` *(доход 0 /расход 1)*, `amount`, `date`, `description`
+  `id`, `user_id`, `category_id`, `type` *(доход 0 /расход 1)*, `amount`, `date`, `description`, `path`
 - Таблица **`categories`**:  
   `id`, `name`, `type`, `user_id`
 
